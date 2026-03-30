@@ -403,7 +403,7 @@ def add_daily_entry(message, journal_dir=None):
     tags, thought = generate_thought_and_tags(message)
     
     entry = f"- {time_str} {message} {tags}\n"
-    entry += f"  - 💡 旺财的想法：{thought} #感悟\n"
+    entry += f"  - 💡 旺财的想法：{thought}\n"
     
     # 检查是否是新的第一天（文件不存在或为空）
     is_new_file = not os.path.exists(file_path) or os.path.getsize(file_path) == 0
