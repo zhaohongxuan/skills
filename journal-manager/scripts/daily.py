@@ -48,6 +48,137 @@ def run_git_command(args, cwd=None, check=True):
         print(f"   错误: {result.stderr.strip()}")
     return result
 
+def generate_thought_and_tags(message):
+    """根据消息内容自动生成标签和想法"""
+    msg_lower = message.lower()
+    
+    # 标签映射
+    tag_map = {
+        "健身": "#运动/健身",
+        "骑行": "#运动/骑行",
+        "跑步": "#运动/跑步",
+        "深蹲": "#运动/力量",
+        "俯卧撑": "#运动/力量",
+        "引体向上": "#运动/力量",
+        "游泳": "#运动/游泳",
+        "篮球": "#运动/球类",
+        "足球": "#运动/球类",
+        "羽毛球": "#运动/球类",
+        "乒乓球": "#运动/球类",
+        "网球": "#运动/球类",
+        "蹦床": "#运动/蹦床",
+        "娃": "#家人/亲子",
+        "孩子": "#家人/亲子",
+        "女儿": "#家人/亲子",
+        "儿子": "#家人/亲子",
+        "老婆": "#家人/伴侣",
+        "家庭": "#家人/家庭",
+        "肯德基": "#生活/美食",
+        "汉堡": "#生活/美食",
+        "炸鸡": "#生活/美食",
+        "做饭": "#生活/下厨",
+        "早餐": "#生活/饮食",
+        "午餐": "#生活/饮食",
+        "晚餐": "#生活/饮食",
+        "露营": "#生活/旅行",
+        "旅游": "#生活/旅行",
+        "郊游": "#生活/旅行",
+        "公园": "#生活/旅行",
+        "儿童乐园": "#家人/亲子",
+        "游乐园": "#生活/娱乐",
+        "龙珠": "#娱乐/动漫",
+        "动漫": "#娱乐/动漫",
+        "电影": "#娱乐/影视",
+        "电视剧": "#娱乐/影视",
+        "游戏": "#娱乐/游戏",
+        "音乐": "#娱乐/音乐",
+        "书": "#学习/阅读",
+        "读书": "#学习/阅读",
+        "背单词": "#学习/英语",
+        "英语": "#学习/英语",
+        "学习": "#学习/学习",
+        "skill": "#技能/工具",
+        "工作": "#工作/任务",
+        "项目": "#工作/项目",
+        "开会": "#工作/会议",
+        "代码": "#技能/编程",
+        "bug": "#技能/编程",
+        "commit": "#技能/编程",
+        "sleep": "#休息/睡眠",
+        "睡觉": "#休息/睡眠",
+        "午睡": "#休息/午休",
+        "疲惫": "#休息/睡眠",
+    }
+    
+    # 想法映射
+    thought_map = {
+        "起床": "新的一天从清醒开始，把握好早晨就是把握好人生 🌅",
+        "冷水澡": "冷水唤醒身体，意志力就是在不舒服中坚持 💪",
+        "俯卧撑": "龟仙流修行第一步，50个俯卧撑就是热身 💪",
+        "深蹲": "腿部力量是龟仙流的基础，深蹲让人更有劲 🏋️",
+        "骑行": "骑行是最自由的运动，边走边看风景 🚴",
+        "跑步": "跑步是跟自己的对话，每一步都是修行 👟",
+        "蹦床": "弹跳的快乐谁懂！运动也可以很有趣 💪",
+        "游泳": "水中健身，全身都动起来的感觉真好 🏊",
+        "娃": "陪伴是最长情的告白，孩子成长的速度比你想象的快 👶",
+        "儿子": "小男孩的成长速度惊人，每一天都在变化 👦",
+        "女儿": "小棉袄的温暖，陪伴是最好的爱 👧",
+        "老婆": "家人的支持是最强的后盾 💕",
+        "家庭": "家是温暖的港湾 💕",
+        "儿童乐园": "儿童乐园是父母的休息站，也是孩子的快乐天地 🎠",
+        "肯德基": "垃圾食品但真香！偶尔放纵一下也是生活的一部分 🍗",
+        "汉堡": "简单粗暴的快乐，垃圾食品也有存在的意义 🍔",
+        "炸鸡": "香脆可口，偶尔满足一下味蕾也是幸福 🍗",
+        "做饭": "为家人做饭是一件幸福的事，大家吃得开心最重要 👨‍🍳",
+        "早餐": "一日之计在于晨，早餐要吃好 🍳",
+        "午餐": "午餐要吃饱，下午才有精力战斗 🍱",
+        "晚餐": "晚餐要吃少，晚上才能睡得好 🍽️",
+        "露营": "走出家门，亲近大自然，露营是最好的充电方式 ⛺",
+        "郊游": "户外活动是最好的解压方式，新鲜空气和阳光 🌿",
+        "公园": "城市里的绿洲，给身心放个假 🌳",
+        "旅游": "读万卷书不如行万里路，旅行让人成长 ✈️",
+        "龙珠": "龟仙流精神永不过时：基础+坚持+快乐修行 🐉",
+        "动漫": "二次元的世界很美好，童心不灭 🎬",
+        "电影": "电影是浓缩的人生，两个小时体验另一种生活 🎥",
+        "读书": "读书是与作者对话，启迪智慧的最好方式 📚",
+        "苏轼": "苏轼的豁达值得学习，人生起伏很正常 🍵",
+        "背单词": "每天积累一点点，长期坚持就能看到巨大进步 📚",
+        "英语": "英语是通向世界的桥梁，坚持学习才能掌握 💪",
+        "学习": "学如逆水行舟，不进则退。每天进步一点点 💪",
+        "skill": "工具提升效率，自动化是龟仙流的终极目标 🔧",
+        "工作": "工作中的挑战是成长的机会 💪",
+        "项目": "做好项目就是最好的作品 🚀",
+        "代码": "代码是创造的工具，写代码是快乐的创造 🚀",
+        "bug": "Bug是成长的阶梯，解决问题就是进步 🔧",
+        "commit": "提交是进步的印记，每一个小commit都是前进 🚀",
+        "睡眠": "睡眠是第一生产力，睡好才能干好 😴",
+        "睡觉": "休息好才能工作好，睡眠是第一生产力 😴",
+        "午睡": "20分钟小憩是恢复精力的好方法 😴",
+        "疲惫": "累了就休息，身体是革命的本钱 😴",
+        "提醒": "小事情也要记下来，大脑是用来思考的不是用来记事的 📝",
+        "美津浓": "好鞋配英雄，一双好鞋让训练更愉快 👟",
+        "必迈": "没有对比就没有伤害，质量才是王道 👟",
+        "压缩毛巾": "出行必备，方便又实用 🧴",
+    }
+    
+    # 查找匹配的标签
+    found_tags = []
+    for keyword, tag in tag_map.items():
+        if keyword in message:
+            found_tags.append(tag)
+    
+    # 查找匹配的想法
+    found_thought = "每天都是新的一天，记录让生活更精彩 ✨"
+    for keyword, thought in thought_map.items():
+        if keyword in message:
+            found_thought = thought
+            break
+    
+    # 去重
+    tags = " ".join(set(found_tags)) if found_tags else "#生活/日常"
+    
+    return tags, found_thought
+
 def get_week_filename(journal_dir, date=None):
     """获取周记文件名"""
     if date is None:
@@ -268,16 +399,44 @@ def add_daily_entry(message, journal_dir=None):
     
     file_path = os.path.join(target_dir, f"{year}-{month}-{day}.md")
     
-    entry = f"- {time_str} {message}"
+    # 分析内容，自动添加标签和想法
+    tags, thought = generate_thought_and_tags(message)
     
-    if os.path.exists(file_path):
+    entry = f"- {time_str} {message} {tags}\n"
+    entry += f"  - 💡 旺财的想法：{thought} #感悟\n"
+    
+    # 检查是否是新的第一天（文件不存在或为空）
+    is_new_file = not os.path.exists(file_path) or os.path.getsize(file_path) == 0
+    
+    if is_new_file:
+        # 读取模板
+        template_path = "/root/obsidian-vault-xuan/Assets/_Templates/DailyNote.md"
+        if os.path.exists(template_path):
+            with open(template_path, 'r', encoding='utf-8') as f:
+                template_content = f.read()
+            # 替换模板中的日期占位符
+            template_content = template_content.replace("<% tp.file.creation_date() %>", date_str)
+            template_content = template_content.replace("<% moment(tp.file.title, \"YYYY-MM-DD\").format(\"YYYY\") %>", year)
+            template_content = template_content.replace("<% moment(tp.file.title, \"YYYY-MM-DD\").format(\"YYYY-[W]ww\") %>", f"{year}-W{now.isocalendar()[1]:02d}")
+            template_content = template_content.replace("<% moment().format(\"HH:mm\") %>", time_str)
+            # 移除 Poem 部分（不需要每日诗歌）
+            template_content = re.sub(r'## Poem\n---?\n.*?\n---\n', '', template_content, flags=re.DOTALL)
+            template_content = template_content.replace('<% await tp.user.daily_poem(tp) %>', '')
+            
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(template_content)
+        else:
+            # 如果没有模板，创建基本结构
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(f"# {date_str}\n\n## Journal\n---\n")
+    elif os.path.exists(file_path):
         with open(file_path, "rb") as f:
             f.seek(max(0, os.path.getsize(file_path) - 1))
             last_char = f.read(1)
             if last_char not in (b'\n', b'\r'):
                 entry = "\n" + entry
-    
-    entry += "\n"
+    else:
+        entry = "\n" + entry
     
     with open(file_path, "a", encoding="utf-8") as journal:
         journal.write(entry)
