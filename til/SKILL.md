@@ -1,90 +1,125 @@
 ---
 name: til
-description: "Summarize links/URLs and create TIL (Today I Learned) note cards as separate Obsidian files with double links. Use when: user shares a link/URL and wants to save a summary to their knowledge base. This skill fetches the URL content, extracts key information, generates relevant tags, creates a dedicated .md file in Resources/TIL/, and adds a double link in the daily journal with #TIL hashtag."
-metadata: { "openclaw": { "emoji": "📚", "requires": { "bins": ["curl", "python3"] } } }
+description: 处理一篇文章/内容，内化成结构化 TIL 笔记，并追加到日记
 ---
 
-## Summary
-The `til` skill transforms links into knowledge cards stored as separate Obsidian notes with double links.
+# /til — 知识内化 Skill
 
-### Use Cases
-- User shares a link → skill creates separate TIL note → adds double link to journal
-- Build a knowledge base from articles, tutorials, docs
-- Quick way to save interesting findings without cluttering journal
+将一篇网页/文章转化为结构化 TIL 笔记，关联已有知识库，追加到日记。
 
-### Features
-- Fetch URL content automatically
-- Extract title and key information
-- Generate relevant tags based on content
-- Create formatted note card as **separate .md file**
-- Add **double link** to daily journal (not inline content)
-- Auto Git commit and push
+## 输入
 
-### File Structure
 ```
-/root/obsidian-vault-xuan/Resources/TIL/
-  └── 2026-03-26_我对_Spec_Driven_Development_的看法.md
-
-/root/obsidian-vault-xuan/Journal/2026/03/2026-03-26.md
-  └── - 21:15 📚 TIL: [[Resources/TIL/2026-03-26_我对_Spec_Driven_Development_的看法.md|我对 Spec Driven Development...]]
+/til <URL 或 文件路径>
 ```
 
-### Recommended Script
-1. `til.py` - Main script to fetch URL, create TIL file, and add journal link
+## 处理流程
 
-### Usage
+### Step 1️⃣ — 获取内容
 
-```bash
-# Basic usage - summarize a URL and create TIL note
-python3 skills/til/scripts/til.py https://example.com/article
+**如果是 URL：**
+- 使用 `WebFetch` 抓取页面内容
+- 提取标题、正文、来源信息
 
-# With custom note
-python3 skills/til/scripts/til.py https://example.com/article "这篇讲的是 AI 进展"
+**如果是本地文件路径：**
+- 直接读取文件内容
 
-# Dry run (don't save, just show output)
-python3 skills/til/scripts/til.py https://example.com --dry-run
-```
+### Step 2️⃣ — 保存到剪藏
 
-### Output Format
-
-**TIL File** (`Resources/TIL/YYYY-MM-DD_title.md`):
+- 将原始内容保存到 `Resources/Clippings/YYYY-MM-DD_标题.md`
+- 文件格式：
 ```markdown
 ---
-title: Article Title
-source: https://example.com/article
-date: 2026-03-26
-tags: [#Python #AI #技术]
+title: 文章标题
+source: <原始URL>
+clipped: <今天日期>
+tags: #to_process
 ---
 
-# Article Title
+<正文内容>
+```
 
-> **来源**: [https://example.com/article](https://example.com/article)
-> **标签**: #Python #AI #技术
+### Step 3️⃣ — 关键词匹配（扫描知识库）
 
-## 📝 摘要
+扫描 `Resources/` 和 `Areas/` 下的所有笔记，匹配：
 
-文章的主要内容摘要...
+- 文件名/标题中的关键词
+- 首行/首段的关键词
+- 相同标签的笔记
 
-## 💡 我的笔记
+输出 3-5 个最相关的已有笔记及关联原因。
 
-> 个人评注（可选）
+### Step 4️⃣ — 生成结构化 TIL
 
+创建 `Resources/TIL/YYYY-MM-DD_关键词.md`：
+
+```markdown
 ---
-#TIL #知识积累 #Python #AI #技术
+title: 标题
+source: https://原始链接
+date: <今天日期>
+tags: [TIL, 主题]
+---
+
+## 一句话总结
+<用一句话概括这篇文章讲了什么>
+
+## 核心观点
+<3-5 个核心观点的简短列表>
+
+## 最打动我的段落
+> <最打动你的一两段引用>
+
+## 关联笔记
+- [[笔记1]] — <为什么关联>
+- [[笔记2]] — <为什么关联>
+
+## 我的洞察
+<你的思考：这篇文章补充/挑战/延伸了你的哪些已有想法？>
+
+## 可以写什么
+- [ ] 长文：《<选题角度>》
+- [ ] 小红书：<一句话选题>
+- [ ] Twitter：<140字版本>
 ```
 
-**Journal Entry** (double link):
-```
-- HH:MM 📚 TIL: [[Resources/TIL/2026-03-26_article-title.md|Article Title...]]
+### Step 5️⃣ — 追加到日记
+
+在今天日记的 `## Journal` 区块追加，时间戳使用 HH:mm 格式（用 `date +%H:%M` 获取当前时间）：
+
+```markdown
+- HH:mm #TIL [[Resources/TIL/YYYY-MM-DD_关键词|标题]]：<一句话洞察>
 ```
 
-### Integration
-- TIL files saved to: `/root/obsidian-vault-xuan/Resources/TIL/`
-- Journal updated: `/root/obsidian-vault-xuan/Journal/YYYY/MM/YYYY-MM-DD.md`
-- Uses `journal-manager` pattern for git add/commit/push
+注意：只写洞察，不写「关联到XXX笔记」。
 
-### Benefits
-1. **知识库分离**: TIL 内容不污染日记，保持日记简洁
-2. **双链引用**: 日记中通过 `[[Resources/TIL/...]]` 引用
-3. **可搜索**: TIL 文件可独立搜索和整理
-4. **可扩展**: 未来可以添加 `Resources/TIL` 到 MOC (Map of Content)
+## 输出示例
+
+```
+✅ 已保存到剪藏：Resources/Clippings/2026-04-11_行业物化与自由.md
+✅ 已创建 TIL：Resources/TIL/2026-04-11_行业物化与自由.md
+
+📚 关联笔记（3个）：
+   1. [[执而不着]] — 都讨论了"着"与"不着"的哲学
+   2. [[职业规划]] — 关于工作意义的思考
+   3. [[自由职业]] — 涉及自由与物化的张力
+
+💡 写作方向：
+   - 长文：《物化与自由：从刷抖音到做产品》
+   - 小红书：为什么我不再追求"专业壁垒"
+
+📔 已追加到日记：Journal/2026/04/2026-04-11.md
+   - 10:32 #TIL [[Resources/TIL/2026-04-11_行业物化与自由|行业物化与自由]]：物化即放弃主体性，自由的前提是拒绝被定义
+```
+
+## 使用场景
+
+- 读完一篇好文章，想要内化时
+- 微信读书标注后，想要扩展思考时
+- 播客笔记，想要延伸写作方向时
+
+## 注意事项
+
+- 关联匹配使用关键词+标签综合评分，取 top 3-5
+- 如果匹配结果太少，说明这篇文章是新的知识领域
+- 写作方向只是建议，具体选题可以根据当天状态选择
