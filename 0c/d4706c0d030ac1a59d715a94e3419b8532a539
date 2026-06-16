@@ -1,0 +1,19 @@
+README.md
+  s_53275f82b21530::t_735ed0dbf62910 29-31,34-38,40-45,47,51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.17-trip",
+  "base_commit_sha": "0cd4706c0d030ac1a59d715a94e3419b8532a539",
+  "prompts": {},
+  "sessions": {
+    "s_53275f82b21530": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c2888531-c4c3-4976-b7a9-39c0e16b76f1",
+        "model": "MiniMax-M2.7"
+      },
+      "human_author": "zhaohongxuan <hxzhenu@gmail.com>"
+    }
+  }
+}
