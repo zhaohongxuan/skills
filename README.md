@@ -26,20 +26,29 @@ xuan 的自定义 [Claude Code](https://claude.ai/code) Skills 集合，用于�
 
 ## 安装
 
-**方式一：作为 Claude Code Plugin（推荐）**
+**方式一：Claude Code 内 `/plugin` 命令（推荐）**
 
-```bash
-git clone git@github.com:zhaohongxuan/skills.git /tmp/hankzhao-skills
-cp -r /tmp/hankzhao-skills/.claude-plugin ~/.claude-plugin
+在 Claude Code 会话中运行：
+
+```
+/plugin marketplace add zhaohongxuan/skills
+/plugin install hankzhao-skills@zhaohongxuan/skills
 ```
 
-> Claude Code 会自动从 `.claude-plugin/plugin.json` 加载所有 skills，无需手动复制 skills 目录。
+之后按 `/skills` 管理已安装的 skills。
 
-**方式二：直接复制 skills 目录**
+**方式二：直接从终端安装**
+
+```bash
+claude plugin marketplace add zhaohongxuan/skills
+claude plugin install hankzhao-skills@zhaohongxuan/skills
+```
+
+**方式三：手动复制 skills 目录**
 
 ```bash
 git clone git@github.com:zhaohongxuan/skills.git /tmp/skills
-cp -r /tmp/skills/* ~/.claude/skills/
+cp -r /tmp/skills/.claude-plugin ~/.claude-plugin
 ```
 
 ## 开发
