@@ -1,0 +1,16 @@
+# 更新日志
+
+本项目的所有重要变更都会记录在此文件中。
+
+格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
+
+## [未发布]
+
+## [1.0.0] - 2026-06-16
+
+### 新增
+
+- **Plugin 支持**：新增 `.claude-plugin/plugin.json`，支持以 Claude Code Plugin 方式加载 skills
+- **company-research**：公司竞争分析与行业研究框架，从创业者/产业研究员/长期投资者三视角深度拆解
+- **reading**：英文阅读学习 — 拆解外文文章，提取词汇句型，生成学习笔记
+- **til**：知识内化 — 将文章转化为结构化 TIL 笔记，关联知识库

@@ -6,9 +6,9 @@ xuan 的自定义 [Claude Code](https://claude.ai/code) Skills 集合，用于�
 
 | Skill | 描述 | 用法 |
 |-------|------|------|
-| **reading** | 英文阅读学习 — 拆解外文文章，提取词汇句型，生成学习笔记 | `/reading <URL \| 双链 \| 文本>` |
-| **til** | 知识内化 — 将文章转化为结构化 TIL 笔记，关联知识库 | `/til <URL \| 文件路径>` |
-| **weread** | 微信读书助手 — 搜索书籍、书架、笔记划线、书评、阅读统计 | `/weread` |
+| **reading** | 英文阅读学习 — 拆解外文文章，提取词汇句型，生成学习笔记 | `/reading <URL | 双链 | 文本>` |
+| **til** | 知识内化 — 将文章转化为结构化 TIL 笔记，关联知识库 | `/til <URL | 文件路径>` |
+| **company-research** | 公司竞争分析 — 三视角（创业者/产业研究员/长期投资者）深度拆解公司或行业 | `研究贵州茅台`、`分析台积电`、`从0做电商挑战亚马逊` |
 
 ### reading
 
@@ -24,15 +24,18 @@ xuan 的自定义 [Claude Code](https://claude.ai/code) Skills 集合，用于�
 - 自动关联已有知识库，追加到日记
 - 笔记输出到 `Areas/TIL/`
 
-### weread
-
-- 搜索书籍、管理书架、查看笔记划线和书评
-- 阅读统计与推荐
-- 9 个子模块覆盖完整微信读书工作流
-
 ## 安装
 
-Skills 放在 `~/.claude/skills/` 下即可被 Claude Code 自动加载：
+**方式一：作为 Claude Code Plugin（推荐）**
+
+```bash
+git clone git@github.com:zhaohongxuan/skills.git /tmp/hankzhao-skills
+cp -r /tmp/hankzhao-skills/.claude-plugin ~/.claude-plugin
+```
+
+> Claude Code 会自动从 `.claude-plugin/plugin.json` 加载所有 skills，无需手动复制 skills 目录。
+
+**方式二：直接复制 skills 目录**
 
 ```bash
 git clone git@github.com:zhaohongxuan/skills.git /tmp/skills
@@ -41,11 +44,20 @@ cp -r /tmp/skills/* ~/.claude/skills/
 
 ## 开发
 
-每个 Skill 由一个目录构成，核心文件是 `SKILL.md`：
-
 ```
-skill-name/
-└── SKILL.md    # frontmatter 声明 name/description，正文为执行指令
+skills-repo/
+├── .claude-plugin/
+│   └── plugin.json     # Plugin 清单，注册所有 skills
+├── skills/
+│   ├── reading/
+│   │   └── SKILL.md
+│   ├── til/
+│   │   └── SKILL.md
+│   └── company-research/
+│       ├── SKILL.md
+│       ├── PROMPT.md
+│       └── EXAMPLES.md
+└── README.md
 ```
 
-修改后提交 PR 即可。欢迎贡献。
+修改 skills 后更新 `plugin.json` 中的路径列表，提交 PR 即可。欢迎贡献。

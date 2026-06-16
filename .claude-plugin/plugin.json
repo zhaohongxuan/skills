@@ -1,0 +1,8 @@
+{
+  "name": "hankzhao-skills",
+  "skills": [
+    "./skills/reading",
+    "./skills/til",
+    "./skills/company-research"
+  ]
+}
