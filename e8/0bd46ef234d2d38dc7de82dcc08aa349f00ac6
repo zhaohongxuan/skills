@@ -1,0 +1,31 @@
+README.md
+  s_53275f82b21530::t_e46d1ed5f0147f 29,31-36,38
+  s_53275f82b21530::t_ef525ceffa1b4b 9-10,27,63
+  s_53275f82b21530::t_cc51f550455614 48-60
+  s_53275f82b21530::t_c0b72d71493c36 11
+.claude-plugin/plugin.json
+  s_53275f82b21530::t_a78f72ee17cb71 4-6
+  s_53275f82b21530::t_1d0a660f7cf2f2 1-3,7-8
+CHANGELOG.md
+  s_53275f82b21530::t_ef618ee6595a94 1,3,5,7,11
+  s_53275f82b21530::t_1cda889604b18b 2,4,6,8-10,12-16
+CLAUDE.md
+  s_53275f82b21530::t_05b9948ef46912 18
+  s_53275f82b21530::t_9f7b6c35d00240 1-17,19-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.17-trip",
+  "base_commit_sha": "e80bd46ef234d2d38dc7de82dcc08aa349f00ac6",
+  "prompts": {},
+  "sessions": {
+    "s_53275f82b21530": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c2888531-c4c3-4976-b7a9-39c0e16b76f1",
+        "model": "MiniMax-M2.7"
+      },
+      "human_author": "zhaohongxuan <hxzhenu@gmail.com>"
+    }
+  }
+}
