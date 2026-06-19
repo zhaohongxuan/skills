@@ -25,6 +25,18 @@ xuan 的自定义 [Claude Code](https://claude.ai/code) Skills 集合，用于�
 - 自动关联已有知识库，追加到日记
 - 笔记输出到 `Areas/TIL/`
 
+### company-research
+
+- 从创业者 / 产业研究员 / 长期投资者三视角拆解公司或行业
+- 支持自然语言提问（`研究贵州茅台`、`从0做电商挑战亚马逊`）
+- 输出竞争格局、护城河、财务与投资判断
+
+### article-cover
+
+- 根据文章内容提炼主题与情绪基调，设计超现实隐喻
+- 输出 Gustave Doré 式黑白木刻/蚀刻风格 16:9 封面提示词
+- 保留文字预留区，便于后期叠加标题；锁定版画风格关键词不漂移
+
 ## 安装
 
 **方式一：Claude Code 内 `/plugin` 命令（推荐）**
@@ -63,10 +75,12 @@ skills-repo/
 │   │   └── SKILL.md
 │   ├── til/
 │   │   └── SKILL.md
-│   └── company-research/
-│       ├── SKILL.md
-│       ├── PROMPT.md
-│       └── EXAMPLES.md
+│   ├── company-research/
+│   │   ├── SKILL.md
+│   │   ├── PROMPT.md
+│   │   └── EXAMPLES.md
+│   └── article-cover/
+│       └── SKILL.md
 └── README.md
 ```
 
