@@ -3,6 +3,7 @@
   "skills": [
     "./skills/reading",
     "./skills/til",
-    "./skills/company-research"
+    "./skills/company-research",
+    "./skills/article-cover"
   ]
 }

@@ -11,6 +11,7 @@
 | **reading** | 英文阅读学习 |
 | **til** | 知识内化 |
 | **company-research** | 公司竞争分析 |
+| **article-cover** | 文章封面提示词 |
 
 ## 开发
 

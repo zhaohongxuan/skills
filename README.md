@@ -9,6 +9,7 @@ xuan 的自定义 [Claude Code](https://claude.ai/code) Skills 集合，用于�
 | **reading** | 英文阅读学习 — 拆解外文文章，提取词汇句型，生成学习笔记 | `/reading <URL | 双链 | 文本>` |
 | **til** | 知识内化 — 将文章转化为结构化 TIL 笔记，关联知识库 | `/til <URL | 文件路径>` |
 | **company-research** | 公司竞争分析 — 三视角（创业者/产业研究员/长期投资者）深度拆解公司或行业 | `研究贵州茅台`、`分析台积电`、`从0做电商挑战亚马逊` |
+| **article-cover** | 文章封面提示词 — 维多利亚黑白木刻/蚀刻风格 16:9 封面绘画提示词 | `/article-cover <文章文本>` |
 
 ### reading
 
