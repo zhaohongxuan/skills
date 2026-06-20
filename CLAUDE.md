@@ -12,6 +12,7 @@
 | **til** | 知识内化 |
 | **company-research** | 公司竞争分析 |
 | **article-cover** | 文章封面提示词 |
+| **hexo-publish** | Hexo 博客发布 |
 
 ## 开发
 

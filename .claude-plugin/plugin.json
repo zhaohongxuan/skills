@@ -4,6 +4,7 @@
     "./skills/reading",
     "./skills/til",
     "./skills/company-research",
-    "./skills/article-cover"
+    "./skills/article-cover",
+    "./skills/hexo-publish"
   ]
 }

@@ -6,6 +6,12 @@
 
 ## [未发布]
 
+## [1.2.0] - 2026-06-20
+
+### 新增
+
+- **hexo-publish**：将 Obsidian 写作草稿发布到 Hexo 博客，自动转换 frontmatter（categories/tags/date）、清理 Obsidian 专有语法、探测既有分类词表避免孤立分类，推送 `src` 分支触发 CD 自动部署
+
 ## [1.1.0] - 2026-06-20
 
 ### 新增

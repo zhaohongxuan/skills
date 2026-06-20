@@ -10,6 +10,7 @@ xuan 的自定义 [Claude Code](https://claude.ai/code) Skills 集合，用于�
 | **til** | 知识内化 — 将文章转化为结构化 TIL 笔记，关联知识库 | `/til <URL | 文件路径>` |
 | **company-research** | 公司竞争分析 — 三视角（创业者/产业研究员/长期投资者）深度拆解公司或行业 | `研究贵州茅台`、`分析台积电`、`从0做电商挑战亚马逊` |
 | **article-cover** | 文章封面提示词 — 维多利亚黑白木刻/蚀刻风格 16:9 封面绘画提示词 | `/article-cover <文章文本>` |
+| **hexo-publish** | Hexo 博客发布 — 将 Obsidian 草稿转为 Hexo 格式并推送触发自动部署 | `/hexo-publish <草稿路径...>` |
 
 ### reading
 
@@ -36,6 +37,13 @@ xuan 的自定义 [Claude Code](https://claude.ai/code) Skills 集合，用于�
 - 根据文章内容提炼主题与情绪基调，设计超现实隐喻
 - 输出 Gustave Doré 式黑白木刻/蚀刻风格 16:9 封面提示词
 - 保留文字预留区，便于后期叠加标题；锁定版画风格关键词不漂移
+
+### hexo-publish
+
+- 将 Obsidian `Writing/Draft/` 草稿迁移到 Hexo 博客 `source/_posts/`
+- 自动探测博客既有分类词表与 frontmatter 约定，禁止产出孤立新分类
+- 转换 frontmatter（categories/tags/date 数组格式），清理 Obsidian 专有语法（`|700` 缩放、`%%注释%%`、坏链 iframe）
+- 文件名转为 `YYYY-MM-DD-英文slug.md`，推送 `src` 分支触发 CD 自动部署
 
 ## 安装
 
@@ -80,6 +88,8 @@ skills-repo/
 │   │   ├── PROMPT.md
 │   │   └── EXAMPLES.md
 │   └── article-cover/
+│       └── SKILL.md
+│   └── hexo-publish/
 │       └── SKILL.md
 └── README.md
 ```
